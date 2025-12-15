@@ -15,6 +15,10 @@ target_include_directories(${PROJECT_NAME}
 set(OBX_GEN_DIR ${CMAKE_SOURCE_DIR}/generated)
 
 
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE PROJECT_SOURCE_DIR="${CMAKE_SOURCE_DIR}"
+)
+
 if (NOT TARGET objectbox) # Using "if" in case a (potential) parent project already defined "objectbox"
     include(FetchContent)
     FetchContent_Declare(
