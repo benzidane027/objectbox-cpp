@@ -26,10 +26,11 @@ static inline OBX_model* create_obx_model() {
     obx_model_entity(model, "Task", 1, 2562820752411264162);
     obx_model_property(model, "id", OBXPropertyType_Long, 1, 592552614405011945);
     obx_model_property_flags(model, OBXPropertyFlags_ID);
-    obx_model_property(model, "text", OBXPropertyType_String, 2, 6046045859698068101);
     obx_model_property(model, "date_created", OBXPropertyType_Date, 3, 9061078796763693251);
     obx_model_property(model, "date_finished", OBXPropertyType_Date, 4, 3909488951465881477);
-    obx_model_entity_last_property_id(model, 4, 3909488951465881477);
+    obx_model_property(model, "title", OBXPropertyType_String, 7, 5521480502092104550);
+    obx_model_property(model, "description", OBXPropertyType_String, 8, 6624106007954297179);
+    obx_model_entity_last_property_id(model, 8, 6624106007954297179);
     
     obx_model_last_entity_id(model, 1, 2562820752411264162);
     return model; // NOTE: the returned model will contain error information if an error occurred.

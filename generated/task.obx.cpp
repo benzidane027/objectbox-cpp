@@ -3,18 +3,21 @@
 #include "task.obx.hpp"
 
 const obx::Property<Task, OBXPropertyType_Long> Task_::id(1);
-const obx::Property<Task, OBXPropertyType_String> Task_::text(2);
 const obx::Property<Task, OBXPropertyType_Date> Task_::date_created(3);
 const obx::Property<Task, OBXPropertyType_Date> Task_::date_finished(4);
+const obx::Property<Task, OBXPropertyType_String> Task_::title(7);
+const obx::Property<Task, OBXPropertyType_String> Task_::description(8);
 
 void Task::_OBX_MetaInfo::toFlatBuffer(flatbuffers::FlatBufferBuilder& fbb, const Task& object) {
     fbb.Clear();
-    auto offsettext = fbb.CreateString(object.text);
+    auto offsettitle = fbb.CreateString(object.title);
+    auto offsetdescription = fbb.CreateString(object.description);
     flatbuffers::uoffset_t fbStart = fbb.StartTable();
     fbb.AddElement(4, object.id);
-    fbb.AddOffset(6, offsettext);
     fbb.AddElement(8, object.date_created);
     fbb.AddElement(10, object.date_finished);
+    fbb.AddOffset(16, offsettitle);
+    fbb.AddOffset(18, offsetdescription);
     flatbuffers::Offset<flatbuffers::Table> offset;
     offset.o = fbb.EndTable(fbStart);
     fbb.Finish(offset);
@@ -36,15 +39,23 @@ void Task::_OBX_MetaInfo::fromFlatBuffer(const void* data, size_t, Task& outObje
     const auto* table = flatbuffers::GetRoot<flatbuffers::Table>(data);
     assert(table);
     outObject.id = table->GetField<obx_id>(4, 0);
-    {
-        auto* ptr = table->GetPointer<const flatbuffers::String*>(6);
-        if (ptr) {
-            outObject.text.assign(ptr->c_str(), ptr->size());
-        } else {
-            outObject.text.clear();
-        }
-    }
     outObject.date_created = table->GetField<int64_t>(8, 0);
     outObject.date_finished = table->GetField<int64_t>(10, 0);
+    {
+        auto* ptr = table->GetPointer<const flatbuffers::String*>(16);
+        if (ptr) {
+            outObject.title.assign(ptr->c_str(), ptr->size());
+        } else {
+            outObject.title.clear();
+        }
+    }
+    {
+        auto* ptr = table->GetPointer<const flatbuffers::String*>(18);
+        if (ptr) {
+            outObject.description.assign(ptr->c_str(), ptr->size());
+        } else {
+            outObject.description.clear();
+        }
+    }
 }
 

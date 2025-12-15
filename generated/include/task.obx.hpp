@@ -15,10 +15,11 @@ struct Task_;
 /// A task with a description, a creation and completion date.
 struct Task {
     obx_id id;
-    std::string text;
     int64_t date_created;
     /// If not set (zero value), the task is not finished.
     int64_t date_finished;
+    std::string title;
+    std::string description;
 
     struct _OBX_MetaInfo {
         static constexpr obx_schema_id entityId() { return 1; }
@@ -41,8 +42,9 @@ struct Task {
 
 struct Task_ {
     static const obx::Property<Task, OBXPropertyType_Long> id;
-    static const obx::Property<Task, OBXPropertyType_String> text;
     static const obx::Property<Task, OBXPropertyType_Date> date_created;
     static const obx::Property<Task, OBXPropertyType_Date> date_finished;
+    static const obx::Property<Task, OBXPropertyType_String> title;
+    static const obx::Property<Task, OBXPropertyType_String> description;
 };
 
