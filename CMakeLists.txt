@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(demo LANGUAGES CXX)
 
 
-find_package(ZLIB REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_executable(${PROJECT_NAME} src/main.cpp generated)
 
@@ -44,6 +44,4 @@ if (NOT TARGET objectbox) # Using "if" in case a (potential) parent project alre
 endif ()
 
 target_link_libraries(${PROJECT_NAME} objectbox)
-
-target_link_libraries(${PROJECT_NAME} ZLIB::ZLIB)
-
+target_link_libraries(${PROJECT_NAME} Qt6::Widgets) 
