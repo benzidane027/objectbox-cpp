@@ -7,7 +7,4 @@ table Task {
     /// objectbox:date
     date_created: long;
 
-    /// objectbox:date
-    /// If not set (zero value), the task is not finished.
-    date_finished: long;
 }

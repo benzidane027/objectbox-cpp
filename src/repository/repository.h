@@ -1,19 +1,13 @@
 #ifndef USERREPOSITORY_H
 #define USERREPOSITORY_H
 
-#include <QString>
-#include <QVector>
+#include "task.obx.hpp"
+#include "../database/database.h"
 
-struct Task
-{
-    int id;
-    QString name;
-    QString create;
-};
 
 class Repository{
     public:
-    QVector<Task> fetchTasks();
+    Repository();
 };
 
 #endif

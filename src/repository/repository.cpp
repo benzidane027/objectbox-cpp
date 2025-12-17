@@ -1,8 +1,10 @@
 #include "repository.h"
-#include "../database/database.h"
 
-QVector<Task> Repository::fetchTasks()
+Repository::Repository()
 {
-    QVector<Task> data;
-    return data;
+    Database *db = new Database();
+    // auto x =db->putItem(_t);
+    // //std::cout<<x;
+    // auto r = db->getItem<Task>(1);
+    // std::cout << r->description;
 }
