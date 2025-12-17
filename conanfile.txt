@@ -1,6 +1,5 @@
 [requires]
 objectbox/0.18.1
-qt/6.6.2
 
 [generators]
 CMakeDeps
