@@ -39,6 +39,13 @@ public:
         return box.put(item);
     }
 
+    template <typename T>
+    std::vector<std::unique_ptr<T>> getAllItems()
+    {
+        obx::Box<T> box(*store);
+        return box.getAll();
+    }
+
 private:
     std::unique_ptr<obx::Store> store;
 };

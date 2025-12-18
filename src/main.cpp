@@ -10,11 +10,7 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-     Repository re;
      QApplication app(argc, argv);
      UI ui;
-
-     ui.setup();
-
      return  app.exec();
 }

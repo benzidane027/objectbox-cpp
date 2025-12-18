@@ -1,37 +1,41 @@
 #include "ui.h"
+#include <algorithm>
 
 UI::UI()
 {
+    repo = new Repository();
     setWindowTitle("Task Manager");
     resize(800, 600);
     buildTable();
     fillTable();
     show();
 }
-void UI::setup()
-{
-}
 
 void UI::fillTable()
 {
-    std::cout << "hello ******************\n";
-    // if(table == nullptr) return;
-    std::cout << "hello";
-    //int row = table->rowCount();
+    int rowIndex = 0;
+    repo->dataTable();
 
-    // table->insertRow(row);
-    // table->setItem(row, 0, new QTableWidgetItem("Version"));
-    // table->setItem(row, 1, new QTableWidgetItem("1.0"));
+    std::vector<Json::Value> data = repo->dataTable();
+    std::for_each(data.begin(), data.end(), [&](auto &item)
+                  {
+    int index=0;
+    std::cout << item.toStyledString()<<"\n";
+    table->insertRow(rowIndex);
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["id"].asString())));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["title"].asString())));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["description"].asString())));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["date_created"].asString())));
+    rowIndex++; });
 }
 
 void UI::buildTable()
 {
-    //table = new QTableWidget(this);
-
-    // table->setColumnCount(4);
-    // table->setHorizontalHeaderLabels({"ID", "Title", "Description", "Create Date"});
-    // table->horizontalHeader()->setStretchLastSection(true);
-    // auto layout = new QVBoxLayout(this);
-    // layout->addWidget(table);
-    // setLayout(layout);
+    table = new QTableWidget(this);
+    table->setColumnCount(4);
+    table->setHorizontalHeaderLabels({"ID", "Title", "Description", "Create Date"});
+    table->horizontalHeader()->setStretchLastSection(true);
+    auto layout = new QVBoxLayout(this);
+    layout->addWidget(table);
+    setLayout(layout);
 }
