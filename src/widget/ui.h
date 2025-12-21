@@ -2,24 +2,28 @@
 #define UI_H
 
 #include <QWidget>
+#include <QFrame>
 #include <QString>
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QHeaderView>
-#include <iostream>
+#include <QFormLayout>
+#include <QPushButton>
+#include <QLineEdit>
 #include "../repository/repository.h"
 
-class UI :public QWidget
+class UI : public QWidget
 {
-    //Q_OBJECT
+    // Q_OBJECT
 public:
     UI();
-    void buildTable();
+    void buildUi();
+    void ButtonClick(QLineEdit*,QLineEdit*);
     void fillTable();
-private:
-    QTableWidget* table;
-    Repository* repo;
 
+private:
+    QTableWidget *table;
+    Repository *repo;
 };
 
-#endif 
+#endif

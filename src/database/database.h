@@ -45,7 +45,11 @@ public:
         obx::Box<T> box(*store);
         return box.getAll();
     }
-
+    template <typename T>
+    void deleteItem(std::vector<uint64_t> &ids){
+        obx::Box<T> box(*store);
+        box.remove(ids);
+    }
 private:
     std::unique_ptr<obx::Store> store;
 };
