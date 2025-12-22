@@ -17,17 +17,17 @@ void UI::fillTable()
     table->setRowCount(0);
     int rowIndex = 0;
 
-    std::vector<Json::Value> data = repo->dataTable();
+    std::vector<std::map<std::string, std::string>> data = repo->dataTable();
 
     std::for_each(data.begin(), data.end(), [&](auto &item)
                   {
     int index=0;
     //std::cout << item.toStyledString()<<"\n";
     table->insertRow(rowIndex);
-    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["id"].asString())));
-    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["title"].asString())));
-    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["description"].asString())));
-    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["date_created"].asString())));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["id"])));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["title"])));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["description"])));
+    table->setItem(rowIndex, index++, new QTableWidgetItem(QString::fromStdString(item["date_created"])));
     rowIndex++; });
 }
 
@@ -39,12 +39,12 @@ void UI::buildUi()
     static QLineEdit *titleEdit = new QLineEdit;
     static QLineEdit *descriptionEdit = new QLineEdit;
     QPushButton *addBtn = new QPushButton("Add");
-    QPushButton *testBtn = new QPushButton("Remove");
+    QPushButton *removeBtn = new QPushButton("Remove");
 
     formLayout->addRow(titleEdit);
     formLayout->addRow(descriptionEdit);
     formLayout->addRow(addBtn);
-    formLayout->addRow(testBtn);
+    formLayout->addRow(removeBtn);
 
     table = new QTableWidget(this);
     table->setColumnCount(4);
@@ -59,7 +59,7 @@ void UI::buildUi()
     setLayout(layout);
     QObject::connect(addBtn, &QPushButton::clicked, this, [&]()
                      { ButtonClick(titleEdit, descriptionEdit); });
-    QObject::connect(testBtn, &QPushButton::clicked, this, [&]()
+    QObject::connect(removeBtn, &QPushButton::clicked, this, [&]()
                      { 
         QModelIndexList rows = table->selectionModel()->selectedRows();
         std::vector<QString> ids;
@@ -67,8 +67,7 @@ void UI::buildUi()
             return table->item(item.row(),0)->text();
         });
         repo->unlinkItem(ids);  
-        fillTable();
-     });
+        fillTable(); });
 }
 
 void UI::ButtonClick(QLineEdit *title, QLineEdit *description)

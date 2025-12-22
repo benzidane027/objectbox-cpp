@@ -13,13 +13,17 @@ add_executable(${PROJECT_NAME}
     src/repository/repository.cpp
     )
 
+target_precompile_headers(${PROJECT_NAME}
+    PRIVATE
+        utils/headers.h
+)
+
 target_include_directories(${PROJECT_NAME}
     PRIVATE
     ${CMAKE_SOURCE_DIR}/generated/include
 )
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
-find_package(jsoncpp REQUIRED)
 
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
 set(OBX_GEN_DIR ${CMAKE_SOURCE_DIR}/generated)
 
@@ -54,4 +58,3 @@ endif()
 
 target_link_libraries(${PROJECT_NAME} objectbox)
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
-target_link_libraries(${PROJECT_NAME} jsoncpp_lib)

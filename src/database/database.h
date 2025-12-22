@@ -4,7 +4,6 @@
 #include <ctime>
 #include <objectbox.hpp>
 #include "objectbox-model.h"
-#include <iostream>
 
 const std::string DB_PATH = std::string(PROJECT_SOURCE_DIR).append("/data/database");
 
