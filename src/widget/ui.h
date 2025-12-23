@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include "../repository/repository.h"
 
+
 class UI : public QWidget
 {
     // Q_OBJECT
@@ -20,6 +21,7 @@ public:
     void buildUi();
     void ButtonClick(QLineEdit*,QLineEdit*);
     void fillTable();
+    void testFunc(const QPoint&);
 
 private:
     QTableWidget *table;
