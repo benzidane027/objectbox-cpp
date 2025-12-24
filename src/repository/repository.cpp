@@ -22,9 +22,10 @@ std::vector<std::map<std::string, std::string>> Repository::dataTable()
         obj["id"] = std::to_string(item->id);
         obj["title"] = item->title;
         obj["description"] = item->description;
-        obj["date_created"] =oss.str();
+        obj["date_created"] = oss.str();
 
-        data.push_back(obj); });
+        data.push_back(obj); 
+    });
     return data;
 }
 

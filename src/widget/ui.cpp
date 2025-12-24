@@ -99,8 +99,7 @@ void UI::testFunc(const QPoint &pos   = QPoint())
     QTableWidgetItem *item = table->itemAt(pos);
     if (!item)
         return;
-
-    // Optional: select the row on right-click
+        
     table->selectRow(item->row());
 
     QMenu menu(this);
@@ -111,7 +110,7 @@ void UI::testFunc(const QPoint &pos   = QPoint())
 
     if (selected == editAction) {
         qDebug() << "Edit row:" << item->row();
-        // TODO: implement edit functionality
+        
     } else if (selected == deleteAction) {
         qDebug() << "Delete row:" << item->row();
         // TODO: implement delete functionality
