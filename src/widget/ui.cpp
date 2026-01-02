@@ -1,8 +1,8 @@
 #include "ui.h"
 #include <algorithm>
 #include <qlineedit.h>
-#include <QProcess>
-#include <QMenu>
+#include <thread>
+#include <mutex>
 
 UI::UI()
 {
@@ -71,22 +71,19 @@ void UI::buildUi()
             this, &UI::testFunc);
 
     // --- Button Connections ---
-   // connect(testBtn, &QPushButton::clicked, this, [&]() { this->testFunc(); });
-    connect(addBtn, &QPushButton::clicked, this, [&]() {
-        ButtonClick(titleEdit, descriptionEdit);
-    });
-    connect(removeBtn, &QPushButton::clicked, this, [&]() {
+    connect(testBtn, &QPushButton::clicked, this, &UI::testButton);
+    connect(addBtn, &QPushButton::clicked, this, [&]()
+            { ButtonClick(titleEdit, descriptionEdit); });
+    connect(removeBtn, &QPushButton::clicked, this, [&]()
+            {
         QModelIndexList rows = table->selectionModel()->selectedRows();
         std::vector<QString> ids;
         std::transform(rows.begin(), rows.end(), std::back_inserter(ids), [&](auto index){
             return table->item(index.row(), 0)->text();
         });
         repo->unlinkItem(ids);
-        fillTable();
-    });
+        fillTable(); });
 }
-
-
 
 void UI::ButtonClick(QLineEdit *title, QLineEdit *description)
 {
@@ -94,25 +91,52 @@ void UI::ButtonClick(QLineEdit *title, QLineEdit *description)
     fillTable();
 }
 
-void UI::testFunc(const QPoint &pos   = QPoint())
+void UI::testFunc(const QPoint &pos = QPoint())
 {
     QTableWidgetItem *item = table->itemAt(pos);
     if (!item)
         return;
-        
+
     table->selectRow(item->row());
 
     QMenu menu(this);
-    QAction *editAction   = menu.addAction("Edit");
+    QAction *editAction = menu.addAction("Edit");
     QAction *deleteAction = menu.addAction("Delete");
 
     QAction *selected = menu.exec(table->viewport()->mapToGlobal(pos));
 
-    if (selected == editAction) {
+    qDebug() << "hello\n";
+
+    if (selected == editAction)
+    {
         qDebug() << "Edit row:" << item->row();
-        
-    } else if (selected == deleteAction) {
+    }
+    else if (selected == deleteAction)
+    {
         qDebug() << "Delete row:" << item->row();
         // TODO: implement delete functionality
     }
 }
+
+std::mutex mtx;
+int mtxCounter = 0;
+std::atomic<int> atomicCounter = 0;
+
+void increment(){
+   // mtx.lock();
+    atomicCounter++;
+    qDebug()<<"\n****************\n";
+    qDebug()<<atomicCounter;
+    qDebug()<<"\n****************\n";
+   // mtx.unlock();
+}
+void UI::testButton()
+{
+    const auto processor_count = std::thread::hardware_concurrency();
+    std::thread t1(increment);
+    std::thread t2(increment);
+
+    t1.join();
+    t2.join();
+}
+

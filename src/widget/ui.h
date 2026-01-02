@@ -10,6 +10,8 @@
 #include <QFormLayout>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QMenu>
+#include <QProcess>
 #include "../repository/repository.h"
 
 
@@ -22,6 +24,7 @@ public:
     void ButtonClick(QLineEdit*,QLineEdit*);
     void fillTable();
     void testFunc(const QPoint&);
+    void testButton();
 
 private:
     QTableWidget *table;
