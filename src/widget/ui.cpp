@@ -121,8 +121,9 @@ void UI::testFunc(const QPoint &pos = QPoint())
 void UI::testButton()
 {
     QDialog *dlg = new QDialog(this);
-    dlg->setWindowTitle("Popup");
+    dlg->setWindowTitle("chart test");
     dlg->resize(300, 150);
+    dlg->setContentsMargins(QMargins(0, 0, 0, 0));
 
     QBarSeries *series = new QBarSeries;
     QBarSet *set0 = new QBarSet("Jane");
@@ -131,13 +132,15 @@ void UI::testButton()
 
     auto chart = new QChart;
     chart->addSeries(series);
-    chart->createDefaultAxes();
-    
-    QChartView *view = new QChartView(chart);
 
+    chart->legend()->hide();
+    chart->setMargins(QMargins(0, 0, 0, 0));
+    chart->createDefaultAxes();
+
+    QChartView *view = new QChartView(chart);
     QVBoxLayout layout(dlg);
     layout.addWidget(view);
-    layout.setContentsMargins(0, 0, 0, 0);
-
+    layout.setContentsMargins(QMargins(0, 0, 0, 0));
+    
     dlg->exec(); // modal
 }
