@@ -1,5 +1,6 @@
 #include "ui.h"
 #include <algorithm>
+#include <qglobal.h>
 #include <qlineedit.h>
 #include <thread>
 #include <mutex>
@@ -120,6 +121,12 @@ void UI::testFunc(const QPoint &pos = QPoint())
 
 void UI::testButton()
 {
+    
+
+    
+    
+
+
     QDialog *dlg = new QDialog(this);
     dlg->setWindowTitle("chart test");
     dlg->resize(300, 150);
