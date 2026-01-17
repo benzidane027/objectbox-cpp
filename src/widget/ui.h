@@ -12,7 +12,13 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QProcess>
+#include <QDialog>
 #include "../repository/repository.h"
+
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
 
 
 class UI : public QWidget

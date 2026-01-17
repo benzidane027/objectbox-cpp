@@ -118,25 +118,26 @@ void UI::testFunc(const QPoint &pos = QPoint())
     }
 }
 
-std::mutex mtx;
-int mtxCounter = 0;
-std::atomic<int> atomicCounter = 0;
-
-void increment(){
-   // mtx.lock();
-    atomicCounter++;
-    qDebug()<<"\n****************\n";
-    qDebug()<<atomicCounter;
-    qDebug()<<"\n****************\n";
-   // mtx.unlock();
-}
 void UI::testButton()
 {
-    const auto processor_count = std::thread::hardware_concurrency();
-    std::thread t1(increment);
-    std::thread t2(increment);
+    QDialog *dlg = new QDialog(this);
+    dlg->setWindowTitle("Popup");
+    dlg->resize(300, 150);
 
-    t1.join();
-    t2.join();
+    QBarSeries *series = new QBarSeries;
+    QBarSet *set0 = new QBarSet("Jane");
+    *set0 << 1 << 2 << 3 << 4 << 5 << 6;
+    series->append(set0);
+
+    auto chart = new QChart;
+    chart->addSeries(series);
+    chart->createDefaultAxes();
+    
+    QChartView *view = new QChartView(chart);
+
+    QVBoxLayout layout(dlg);
+    layout.addWidget(view);
+    layout.setContentsMargins(0, 0, 0, 0);
+
+    dlg->exec(); // modal
 }
-
